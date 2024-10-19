@@ -28,8 +28,8 @@ services:
       retries: 10
 
   ewm-service:
-     ports:
+    ports:
       - "8080:8080"
 
   ewm-db:
-     image: postgres:16.1
+    image: postgres:16.1
