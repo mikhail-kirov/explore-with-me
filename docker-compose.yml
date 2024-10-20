@@ -28,8 +28,29 @@ services:
       retries: 10
 
   ewm-service:
+    build: ewm
+    image: docker-image-app-ewm:0.1
+    container_name: explore-with-me
     ports:
       - "8080:8080"
+    depends_on:
+      - ewm-db
+    entrypoint:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/ewm
+      - SPRING_DATASOURCE_USERNAME=test
+      - SPRING_DATASOURCE_PASSWORD=test
 
   ewm-db:
     image: postgres:16.1
+    container_name: ewm_postgres
+    ports:
+      - "8081:5432"
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=test
+      - POSTGRES_DB=ewm
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10
