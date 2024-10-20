@@ -7,8 +7,8 @@ services:
       - "9090:9090"
     depends_on:
       - stats-db
-    entrypoint:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/stats
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:9091/stats
       - SPRING_DATASOURCE_USERNAME=test
       - SPRING_DATASOURCE_PASSWORD=test
 
@@ -18,9 +18,9 @@ services:
     ports:
       - "9091:5432"
     environment:
+      - POSTGRES_DB=stats
       - POSTGRES_PASSWORD=test
       - POSTGRES_USER=test
-      - POSTGRES_DB=stats
     healthcheck:
       test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
       timeout: 5s
@@ -35,8 +35,8 @@ services:
       - "8080:8080"
     depends_on:
       - ewm-db
-    entrypoint:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewm
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm:8081/ewm
       - SPRING_DATASOURCE_USERNAME=test
       - SPRING_DATASOURCE_PASSWORD=test
 
@@ -46,9 +46,9 @@ services:
     ports:
       - "8081:5432"
     environment:
+      - POSTGRES_DB=ewm
       - POSTGRES_PASSWORD=test
       - POSTGRES_USER=test
-      - POSTGRES_DB=ewm
     healthcheck:
       test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
       timeout: 5s
