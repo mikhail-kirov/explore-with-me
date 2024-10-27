@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@Table(name = "endpoint_hit", schema = "public")
+@Table(name = "endpoint_hit")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
