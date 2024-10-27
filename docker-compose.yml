@@ -1,6 +1,6 @@
 services:
   stats-server:
-    build: ./statistics/server
+    build: statistics/server
     image: docker-image-app-stats:0.1
     container_name: explore-statistics
     ports:
@@ -28,7 +28,7 @@ services:
       retries: 10
 
   ewm-service:
-    build: ./ewm
+    build: ewm
     image: docker-image-app-ewm:0.1
     container_name: explore-ewm
     ports:
