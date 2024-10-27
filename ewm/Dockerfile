@@ -1,3 +1,3 @@
-FROM eclipse-temurin:21-jre-jammy
+FROM amazoncorretto:11-alpine-jdk
 COPY target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
