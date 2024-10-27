@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "endpoint_hit")
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(toBuilder = true)
+@Builder
 public class EndpointHit {
 
     @Id
