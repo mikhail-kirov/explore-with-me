@@ -1,6 +1,6 @@
 services:
   stats-server:
-    build: statistics
+    build: ./statistics/server
     image: docker-image-app-stats:0.1
     container_name: explore-statistics
     ports:
@@ -8,7 +8,7 @@ services:
     depends_on:
       - stats-db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/stats
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:6540/stats
       - SPRING_DATASOURCE_USERNAME=test
       - SPRING_DATASOURCE_PASSWORD=test
 
@@ -16,7 +16,7 @@ services:
     image: postgres:16.1
     container_name: stat_postgres
     ports:
-      - "9091:5432"
+      - "6540:5432"
     environment:
       - POSTGRES_DB=stats
       - POSTGRES_PASSWORD=test
@@ -28,9 +28,9 @@ services:
       retries: 10
 
   ewm-service:
-    build: ewm
+    build: ./ewm
     image: docker-image-app-ewm:0.1
-    container_name: explore-with-me
+    container_name: explore-ewm
     ports:
       - "8080:8080"
     depends_on:
@@ -45,7 +45,7 @@ services:
     image: postgres:16.1
     container_name: ewm_postgres
     ports:
-      - "8081:5432"
+      - "6541:5432"
     environment:
       - POSTGRES_DB=ewm
       - POSTGRES_PASSWORD=test
