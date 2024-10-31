@@ -26,7 +26,7 @@ public class MappingHits {
                 .build();
     }
 
-    public static ViewStatsDto mapToStatsDtoFromHit(EndpointHit hit, int count) {
+    public static ViewStatsDto mapToStatsDtoFromHit(EndpointHit hit, long count) {
         return ViewStatsDto.builder()
                 .app(hit.getApp())
                 .uri(hit.getUri())

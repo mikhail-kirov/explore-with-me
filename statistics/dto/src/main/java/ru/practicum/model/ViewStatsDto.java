@@ -1,20 +1,22 @@
 package ru.practicum.model;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder(toBuilder = true)
+@Builder
 public class ViewStatsDto {
 
-    @NotNull
     private String app;
 
-    @NotNull
     private String uri;
 
-    private Integer hits;
+    private Long hits;
+
+    public ViewStatsDto(String app, String uri, Long hits) {
+        this.app = app;
+        this.uri = uri;
+        this.hits = hits;
+    }
 }

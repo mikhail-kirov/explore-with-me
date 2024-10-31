@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping()
 @Slf4j
 public class StatsController {
 
@@ -29,9 +28,9 @@ public class StatsController {
     @RequestMapping("/stats")
     public Collection<ViewStatsDto> getStats(@RequestParam(value = "start") String start,
                                                              @RequestParam(value = "end") String end,
-                                                             @RequestParam(value = "uris") List<String> uris,
+                                                             @RequestParam(required = false, value = "uris") List<String> uris,
                                                              @RequestParam(value = "unique", defaultValue = "false") boolean unique) {
-        log.info("Запрос на получение статистики: {}", uris.stream().toList());
+        log.info("Запрос на получение статистики: {}", uris);
         return hitsService.getStats(uris, start, end, unique);
     }
 }
