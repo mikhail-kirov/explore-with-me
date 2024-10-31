@@ -3,6 +3,6 @@ CREATE TABLE IF NOT EXISTS endpoint_hit (
                          app varchar(100) NOT NULL,
                          uri varchar(100) NOT NULL,
                          ip varchar(50) NOT NULL,
-                         timestamp timestamp,
+                         timestamp timestamp without time zone,
                          primary key (id)
 );
