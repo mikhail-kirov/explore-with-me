@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface HitsRepository extends JpaRepository<EndpointHit, Long> {
 
-    @Query("select new ru.practicum.model.ViewStatsDto(ht.app, ht.uri, count(ht.ip)) " +
+    @Query("select new ru.practicum.model.ViewStatsDto(ht.app, ht.uri, count(ht.ip), ht.ip) " +
             "from EndpointHit as ht " +
             "where ht.timestamp between ?2 and ?3 " +
             "and (ht.uri in (?1) or (?1) is null) " +
@@ -18,11 +18,13 @@ public interface HitsRepository extends JpaRepository<EndpointHit, Long> {
             "order by count(ht.ip) desc")
     List<ViewStatsDto> getViewStats(List<String> uris, LocalDateTime start, LocalDateTime end);
 
-    @Query("select new ru.practicum.model.ViewStatsDto(ht.app, ht.uri, count(distinct ht.ip)) " +
+    @Query("select new ru.practicum.model.ViewStatsDto(ht.app, ht.uri, count(distinct ht.ip), ht.ip) " +
             "from EndpointHit as ht " +
             "where ht.timestamp between ?2 and ?3 " +
             "and (ht.uri in (?1) or (?1) is null) " +
-            "group by ht.uri, ht.app " +
+            "group by ht.uri, ht.app, ht.ip " +
             "order by count(distinct ht.ip) desc")
     List<ViewStatsDto> getUniqueViewStats(List<String> uris, LocalDateTime start, LocalDateTime end);
+
+    Boolean existsByIpAndUri(String ip, String uri);
 }

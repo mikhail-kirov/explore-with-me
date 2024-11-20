@@ -34,23 +34,21 @@ public class StatsService extends BaseClient {
         return post("/hit", endpointHitDto);
     }
 
-    public ResponseEntity<Object> getStats(List<String> uris, String start, String end, boolean unique) {
+    public ResponseEntity<Object> getStats(List<String> uris, String start, String end, String unique) {
         Map<String, Object> parameters = new HashMap<>();
-        StringBuilder uriBuilder = new StringBuilder();
-        if (uris.size() > 1) {
-            for (int i = 0; i < uris.size() - 1; i++) {
-                uriBuilder.append(uris.get(i) + "&uris=");
-            }
-            uriBuilder.append(uris.getLast());
-        } else {
-            uriBuilder.append(uris.getFirst());
-        }
         String startCode = URLEncoder.encode(start, StandardCharsets.UTF_8);
         String endCode = URLEncoder.encode(end, StandardCharsets.UTF_8);
-        parameters.put("startCode", startCode);
-        parameters.put("endCode", endCode);
-        parameters.put("uris", uriBuilder);
+        parameters.put("start", startCode);
+        parameters.put("end", endCode);
+        parameters.put("uris", uris);
         parameters.put("unique", unique);
-        return get("/stats", parameters);
+        return get("/stats?start={start}&end={end}&uris={uris}&unique={unique}", parameters);
+    }
+
+    public ResponseEntity<Object> getExistByIpAndUri(String ip, String uri) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("requestIp", ip);
+        parameters.put("uri", uri);
+        return get("/stats/ip?requestIp={requestIp}&uri={uri}", parameters);
     }
 }

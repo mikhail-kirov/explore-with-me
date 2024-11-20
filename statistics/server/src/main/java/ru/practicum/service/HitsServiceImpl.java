@@ -51,6 +51,12 @@ public class HitsServiceImpl implements HitsService {
             return result;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Boolean existByIpAndUri(String ip, String uri) {
+        return hitsRepository.existsByIpAndUri(ip, uri);
+    }
+
     private LocalDateTime parseDate(String date) {
         String decode = URLDecoder.decode(date, StandardCharsets.UTF_8);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
