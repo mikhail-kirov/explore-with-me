@@ -29,7 +29,7 @@ public class ValidEvent {
 
     public Event validEventById(Long eventId) {
         return privateEventRepository.findById(eventId)
-                .orElseThrow(() -> new NotFoundException("The required object was not found.","Event with id="+eventId+" was not found"));
+                .orElseThrow(() -> new NotFoundException("The required object was not found.","Event with id=" + eventId + " was not found"));
     }
 
     public void validNewEventByDate(LocalDateTime eventDate) {

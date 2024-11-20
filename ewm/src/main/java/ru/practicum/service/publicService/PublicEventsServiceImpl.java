@@ -105,10 +105,10 @@ public class PublicEventsServiceImpl implements PublicEventsService {
     }
 
     private PageRequest createPageRequest(String sort, int from, int size) {
-        if(sort == null || sort.equalsIgnoreCase("EVENT_DATE")) {
+        if (sort == null || sort.equalsIgnoreCase("EVENT_DATE")) {
             return PageRequest.of(from, size, Sort.by(Sort.Direction.ASC, "eventDate"));
         }
-        if(sort.equalsIgnoreCase("VIEWS")) {
+        if (sort.equalsIgnoreCase("VIEWS")) {
             return PageRequest.of(from, size, Sort.by(Sort.Direction.ASC, "views"));
         }
         return null;

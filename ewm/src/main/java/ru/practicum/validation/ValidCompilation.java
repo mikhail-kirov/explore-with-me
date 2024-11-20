@@ -17,7 +17,7 @@ public class ValidCompilation {
 
     public Compilation validCompilationById(Long id) {
         return adminCompilationRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("The compilation object was not found.","Compilation with id="+id+" was not found"));
+                .orElseThrow(() -> new NotFoundException("The compilation object was not found.","Compilation with id=" + id + " was not found"));
     }
 
     public void validCompilationByLengthTitle(String name) {

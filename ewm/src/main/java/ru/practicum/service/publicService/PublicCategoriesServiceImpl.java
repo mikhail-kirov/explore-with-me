@@ -25,7 +25,7 @@ public class PublicCategoriesServiceImpl implements PublicCategoriesService {
     @Override
     public List<CategoryDto> getAllCategories(Integer from, Integer size){
         List<Category> categories = publicCategories.getAllCategories(from, size);
-        if(!categories.isEmpty()){
+        if (!categories.isEmpty()){
             log.info("Список категорий отправлен");
             return MappingCategory.toCategoryDto(categories);
         }

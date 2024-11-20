@@ -8,6 +8,8 @@ import ru.practicum.dto.RequestParamForPublicEvent;
 import java.util.List;
 
 public interface PublicEventsService {
+
     List<EventShortDto> getEventsWithFilters(RequestParamForPublicEvent requestParam, HttpServletRequest request);
+
     EventFullDto getEventById(long eventId, HttpServletRequest request);
 }

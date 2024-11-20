@@ -7,9 +7,7 @@ import java.util.List;
 
 public interface PrivateRequestRepository extends JpaRepository<Request, Long> {
 
-    List<Request> findAllByIdIn( List<Long> requestIds);
-
-    List<Request> findAllByEventIn(List<Long> eventIds);
+    List<Request> findAllByIdIn(List<Long> requestIds);
 
     List<Request> findAllByRequester(Long userId);
 

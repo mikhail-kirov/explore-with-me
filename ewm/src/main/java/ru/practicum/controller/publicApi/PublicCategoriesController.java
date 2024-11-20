@@ -21,7 +21,7 @@ public class PublicCategoriesController {
     @GetMapping
     public List<CategoryDto> getAllCategories(@PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
                                               @Positive @RequestParam(name = "size", defaultValue = "10") Integer size) {
-        log.info("Public-запрос на получение списка категорий в диапазоне от {} до {}", from, from+size);
+        log.info("Public-запрос на получение списка категорий в диапазоне от {} до {}", from, from + size);
         return publicCategoriesService.getAllCategories(from, size);
     }
 

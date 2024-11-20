@@ -46,11 +46,11 @@ public class PrivateParticipationRequestServiceImpl implements PrivateParticipat
         validUser.validUserById(userId);
         Event event = validEvent.validEventById(eventId);
 
-        if(!event.getState().equals("PUBLISHED")) {
+        if (!event.getState().equals("PUBLISHED")) {
             throw new IncorrectParameterException("The event has not been published yet.", "Incorrectly made request.");
         }
 
-        if(event.getParticipantLimit().equals(event.getConfirmedRequests()) && event.getParticipantLimit() != 0) {
+        if (event.getParticipantLimit().equals(event.getConfirmedRequests()) && event.getParticipantLimit() != 0) {
             log.info("Ошибка: достигнут лимит участников");
             throw new IncorrectParameterException("Participant limit reached.", "Incorrectly made request.");
         }
@@ -68,12 +68,12 @@ public class PrivateParticipationRequestServiceImpl implements PrivateParticipat
 
         List<Request> savedRequest = privateRequestRepository.findByRequesterAndEvent(userId, eventId);
 
-        if(!savedRequest.isEmpty()) {
+        if (!savedRequest.isEmpty()) {
             log.info("Ошибка: попытка повторно подать заявку на то же мероприятие");
             throw new IncorrectParameterException("Trying to re-apply for the same event.", "Incorrectly made request.");
         }
 
-        if(event.getInitiator().getId().equals(userId)) {
+        if (event.getInitiator().getId().equals(userId)) {
             log.info("Ошибка: инициатор запроса на участие и инициатор события совпадают");
             throw new IncorrectParameterException("Trying to leave a request to participate in your event.", "Incorrectly made request.");
         }
@@ -95,7 +95,7 @@ public class PrivateParticipationRequestServiceImpl implements PrivateParticipat
         validUser.validUserById(userId);
         Request request = validRequest.validateRequestById(requestId);
 
-        if(!request.getRequester().equals(userId)) {
+        if (!request.getRequester().equals(userId)) {
             throw new IncorrectParameterException("The request was initiated by another user.", "Incorrectly made request.");
         }
         request.setStatus(EventStatus.CANCELED.name());

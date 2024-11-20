@@ -25,14 +25,14 @@ public class ValidCategory {
     public void validExistNameCategory(Category category, String categoryName) {
         if (adminCategoriesRepository.existsByName(categoryName) && !category.getName().equals(categoryName)) {
             log.info("Категория с именем {} уже существует", categoryName);
-            throw new IncorrectParameterException("Категория с именем "+categoryName+" уже существует", "Incorrectly made request.");
+            throw new IncorrectParameterException("Категория с именем " + categoryName + " уже существует", "Incorrectly made request.");
         }
     }
 
     public void validExistEventOfCategory(Category category) {
         if (privateEventRepository.existsByCategory(category)) {
             log.info("Ошибка удаления категории. Существуют события с привязкой к категории {}", category.getName());
-            throw new IncorrectParameterException("Не удалено. Существуют события с привязкой к категории "+category.getName(),
+            throw new IncorrectParameterException("Не удалено. Существуют события с привязкой к категории " + category.getName(),
                     "Incorrectly made request.");
         }
     }

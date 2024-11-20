@@ -18,7 +18,7 @@ public interface PrivateEventRepository extends JpaRepository<Event, Long> {
 
     Event findByInitiatorIdAndId(Long userId, Long eventId);
 
-    List<Event> findAllByIdIn(List<Long> Ids);
+    List<Event> findAllByIdIn(List<Long> ids);
 
     boolean existsByCategory(Category category);
 }

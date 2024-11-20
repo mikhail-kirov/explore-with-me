@@ -51,7 +51,7 @@ public class AdminEventsServiceImpl implements AdminEventsService {
                     requestParam.getSize(),
                     requestParam.getFrom());
         }
-        if(!events.isEmpty()) {
+        if (!events.isEmpty()) {
             log.info("Найдено и отправлено событий в количестве: {}", events.size());
             return events.stream().map(MappingEvent::toEventFullDto).toList();
         }
@@ -66,17 +66,17 @@ public class AdminEventsServiceImpl implements AdminEventsService {
         Event event = validEvent.validEventById(eventId);
         LocalDateTime now = LocalDateTime.now();
 
-        if(!now.plusHours(1).isBefore(event.getEventDate())) {
+        if (!now.plusHours(1).isBefore(event.getEventDate())) {
             log.info("Изменения не допускаются менее чем за час до события");
             throw new IncorrectParameterException("Changes are not allowed less than an hour before the event",
                     "For the requested operation the conditions are not met.");
         }
-        if(!event.getState().equals("PENDING")) {
+        if (!event.getState().equals("PENDING")) {
             log.info("Невозможно опубликовать событие, так как оно находится в неправильном состоянии: {}", event.getState());
             throw new IncorrectParameterException("Cannot publish the event because it's not in the right state: " +  event.getState(),
                     "For the requested operation the conditions are not met.");
         }
-        if(eventPatchDto.getStateAction() != null && eventPatchDto.getStateAction().equals(StateAction.REJECT_EVENT.toString()) &&
+        if (eventPatchDto.getStateAction() != null && eventPatchDto.getStateAction().equals(StateAction.REJECT_EVENT.toString()) &&
             event.getState().equals(EventStatus.PUBLISHED.toString())) {
             log.info("Не допускается отклонять опубликованные событий");
             throw new IncorrectParameterException("It is not allowed to reject published events",
