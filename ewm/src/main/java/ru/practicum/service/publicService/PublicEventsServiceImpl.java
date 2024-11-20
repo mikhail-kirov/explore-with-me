@@ -3,7 +3,6 @@ package ru.practicum.service.publicService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -35,8 +34,7 @@ public class PublicEventsServiceImpl implements PublicEventsService {
     private final ValidEvent validEvent;
     private final ParseDate parseDate;
 
-    @Value("${ewm.service.name}")
-    private String serviceName;
+    private static final String SERVICE_NAME = "ewm-public-event-service";
 
     @Override
     public List<EventShortDto> getEventsWithFilters(RequestParamForPublicEvent requestParam, HttpServletRequest request) {
@@ -118,7 +116,7 @@ public class PublicEventsServiceImpl implements PublicEventsService {
         EndpointHitDto endpointHitDto = EndpointHitDto.builder()
                 .ip(request.getRemoteAddr())
                 .uri(request.getRequestURI())
-                .app(serviceName)
+                .app(SERVICE_NAME)
                 .timestamp(LocalDateTime.now())
                 .build();
         statsService.createHit(endpointHitDto);
