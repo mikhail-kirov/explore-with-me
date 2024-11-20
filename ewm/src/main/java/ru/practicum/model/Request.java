@@ -40,4 +40,9 @@ public class Request {
         final Request request = (Request) o;
         return event.equals(request.event) && requester.equals(request.requester);
     }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
