@@ -73,7 +73,7 @@ public class PublicEventsServiceImpl implements PublicEventsService {
                 );
             }
         }
-        if(!events.isEmpty()) {
+        if (!events.isEmpty()) {
             if (!getExistIp(request)) {
                 events.forEach(event -> event.setViews(event.getViews() + 1));
                 publicEventsRepository.saveAll(events);
