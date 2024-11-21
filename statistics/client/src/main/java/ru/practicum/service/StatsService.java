@@ -38,8 +38,8 @@ public class StatsService extends BaseClient {
         Map<String, Object> parameters = new HashMap<>();
         String startCode = URLEncoder.encode(start, StandardCharsets.UTF_8);
         String endCode = URLEncoder.encode(end, StandardCharsets.UTF_8);
-        parameters.put("start", startCode);
-        parameters.put("end", endCode);
+        parameters.put("startCode", startCode);
+        parameters.put("endCode", endCode);
         parameters.put("uris", uris);
         parameters.put("unique", unique);
         return get("/stats?start={start}&end={end}&uris={uris}&unique={unique}", parameters);
