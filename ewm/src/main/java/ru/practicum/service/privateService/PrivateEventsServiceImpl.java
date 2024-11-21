@@ -37,6 +37,14 @@ public class PrivateEventsServiceImpl implements PrivateEventsService {
     @Override
     public EventFullDto postEvent(Long userId, NewEventDto newEvent) {
 
+        if (newEvent.getParticipantLimit() == null) {
+            newEvent.setParticipantLimit(0);
+        }
+
+        if (newEvent.getRequestModeration() == null) {
+            newEvent.setRequestModeration(true);
+        }
+
         validEvent.validNewEventByDate(newEvent.getEventDate());
         User user = validUser.validUserById(userId);
         Category category = validCategory.validCategoryById(newEvent.getCategory());
