@@ -28,8 +28,11 @@ public class ValidEvent {
     }
 
     public Event validEventById(Long eventId) {
+        if (eventId == null) {
+            throw new BadRequestException("Event with id = null", "Bad request.");
+        }
         return privateEventRepository.findById(eventId)
-                .orElseThrow(() -> new NotFoundException("The required object was not found.","Event with id=" + eventId + " was not found"));
+                .orElseThrow(() -> new NotFoundException("Event with id=" + eventId + " was not found", "The required object was not found."));
     }
 
     public void validNewEventByDate(LocalDateTime eventDate) {
