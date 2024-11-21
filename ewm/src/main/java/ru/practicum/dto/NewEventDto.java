@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder(toBuilder = true)
+@Builder
 @Getter
 @Setter
 public class NewEventDto {
