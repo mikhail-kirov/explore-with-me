@@ -72,10 +72,10 @@ public class PublicEventsServiceImpl implements PublicEventsService {
             }
         }
         if (!events.isEmpty()) {
-            if (!getExistIp(request)) {
+            //if (!getExistIp(request)) {
                 events.forEach(event -> event.setViews(event.getViews() + 1));
                 publicEventsRepository.saveAll(events);
-            }
+            //}
             saveStats(request);
             log.info("Информация о запросе отправлена сервису статистики");
             log.info("Публичный запрос на получение подборки событий обработан, данные отправлены");
