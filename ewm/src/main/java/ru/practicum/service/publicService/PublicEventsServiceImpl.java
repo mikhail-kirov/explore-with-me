@@ -76,7 +76,7 @@ public class PublicEventsServiceImpl implements PublicEventsService {
                 events.forEach(event -> event.setViews(event.getViews() + 1));
                 publicEventsRepository.saveAll(events);
             //}
-            saveStats(request);
+            //saveStats(request);
             log.info("Информация о запросе отправлена сервису статистики");
             log.info("Публичный запрос на получение подборки событий обработан, данные отправлены");
             return events.stream().map(MappingEvent::toEventShortDto).toList();
@@ -96,7 +96,7 @@ public class PublicEventsServiceImpl implements PublicEventsService {
             event.setViews(event.getViews() + 1);
             publicEventsRepository.save(event);
         //}
-        saveStats(request);
+        //saveStats(request);
         log.info("Информация о запросе отправлена на сервис статистики");
         log.info("Информации о событии с ID {} отправлена", eventId);
         return MappingEvent.toEventFullDto(event);
