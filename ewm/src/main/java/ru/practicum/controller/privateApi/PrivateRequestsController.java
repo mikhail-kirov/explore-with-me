@@ -20,7 +20,7 @@ public class PrivateRequestsController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ParticipationRequestDto createRequest(@PathVariable Long userId,
-                                                 @RequestParam Long eventId) {
+                                                 @RequestParam(required = false) Long eventId) {
         log.info("Private-запрос на участие в событии с ID: {}", eventId);
         return privateParticipationRequestService.postParticipationRequestDto(userId, eventId);
     }
