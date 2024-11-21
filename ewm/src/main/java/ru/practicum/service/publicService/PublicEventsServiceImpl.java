@@ -24,7 +24,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class PublicEventsServiceImpl implements PublicEventsService {
 
