@@ -92,10 +92,10 @@ public class PublicEventsServiceImpl implements PublicEventsService {
             log.info("Событие с id={} не опубликовано", eventId);
             throw new NotFoundException("Event with id=" + eventId + " is not published", "Incorrectly made request.");
         }
-        if (!getExistIp(request)) {
+        //if (!getExistIp(request)) {
             event.setViews(event.getViews() + 1);
             publicEventsRepository.save(event);
-        }
+        //}
         saveStats(request);
         log.info("Информация о запросе отправлена на сервис статистики");
         log.info("Информации о событии с ID {} отправлена", eventId);
