@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.data.publicData.PublicCategoriesRepository;
@@ -72,10 +73,10 @@ public class PublicEventsServiceImpl implements PublicEventsService {
             }
         }
         if (!events.isEmpty()) {
-            //if (!getExistIp(request)) {
+            if (getExistIp(request).getBody() != null) {
                 events.forEach(event -> event.setViews(event.getViews() + 1));
                 publicEventsRepository.saveAll(events);
-            //}
+            }
             //saveStats(request);
             log.info("Информация о запросе отправлена сервису статистики");
             log.info("Публичный запрос на получение подборки событий обработан, данные отправлены");
@@ -92,10 +93,10 @@ public class PublicEventsServiceImpl implements PublicEventsService {
             log.info("Событие с id={} не опубликовано", eventId);
             throw new NotFoundException("Event with id=" + eventId + " is not published", "Incorrectly made request.");
         }
-        //if (!getExistIp(request)) {
+        if (getExistIp(request).getBody() != null) {
             event.setViews(event.getViews() + 1);
             publicEventsRepository.save(event);
-        //}
+        }
         //saveStats(request);
         log.info("Информация о запросе отправлена на сервис статистики");
         log.info("Информации о событии с ID {} отправлена", eventId);
@@ -122,7 +123,7 @@ public class PublicEventsServiceImpl implements PublicEventsService {
         statsService.createHit(endpointHitDto);
     }
 
-    private Boolean getExistIp(HttpServletRequest request) {
-        return (Boolean) statsService.getExistByIpAndUri(request.getRemoteAddr(), request.getRequestURI()).getBody();
+    private ResponseEntity<Object> getExistIp(HttpServletRequest request) {
+        return statsService.getExistByIpAndUri(request.getRemoteAddr(), request.getRequestURI());
     }
 }
