@@ -25,4 +25,6 @@ public interface HitsRepository extends JpaRepository<EndpointHit, Long> {
             "group by ht.uri, ht.app " +
             "order by count(distinct ht.ip) desc")
     List<ViewStatsDto> getUniqueViewStats(List<String> uris, LocalDateTime start, LocalDateTime end);
+
+    Boolean existsByIpAndUri(String ip, String uri);
 }

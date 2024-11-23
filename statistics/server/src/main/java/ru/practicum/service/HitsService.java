@@ -11,4 +11,6 @@ public interface HitsService {
     EndpointHitDto createHits(EndpointHitDto hit);
 
     Collection<ViewStatsDto> getStats(List<String> uris, String start, String end, boolean unique);
+
+    Boolean existByIpAndUri(String ip, String uri);
 }
