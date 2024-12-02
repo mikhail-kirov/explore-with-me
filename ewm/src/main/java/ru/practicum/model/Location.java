@@ -36,13 +36,4 @@ public class Location {
 
     @Column(name = "owner")
     private Long owner;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Location location = (Location) o;
-        return (name.equals(location.name) && description.equals(location.description) &&
-                lat.equals(location.lat) && lon.equals(location.lon) && owner.equals(location.owner));
-    }
 }
