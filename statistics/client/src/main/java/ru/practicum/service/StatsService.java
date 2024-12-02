@@ -1,8 +1,5 @@
 package ru.practicum.service;
 
-import com.opencagedata.jopencage.JOpenCageGeocoder;
-import com.opencagedata.jopencage.model.JOpenCageResponse;
-import com.opencagedata.jopencage.model.JOpenCageReverseRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
