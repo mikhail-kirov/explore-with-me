@@ -4,6 +4,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import ru.practicum.model.Event;
+import ru.practicum.model.Location;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,4 +24,8 @@ public interface AdminEventsRepository extends JpaRepository<Event, Long> {
 
     @Query("select ev from Event as ev")
     List<Event> findEventsByPage(Pageable pageable);
+
+    List<Event> findEventsByLocation(Location location);
+
+    List<Event> findAllByLocationIn(List<Location> locations);
 }

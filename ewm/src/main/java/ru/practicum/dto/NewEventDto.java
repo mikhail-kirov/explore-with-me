@@ -31,7 +31,7 @@ public class NewEventDto {
     private LocalDateTime eventDate;
 
     @NotNull
-    private Location location;
+    private Long location;
 
     private Boolean paid = false;
 

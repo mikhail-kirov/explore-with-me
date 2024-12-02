@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-import ru.practicum.dto.Location;
 
 import java.time.LocalDateTime;
 
@@ -69,10 +68,8 @@ public class Event {
     @Column(name = "confirmed_requests")
     private Integer confirmedRequests;
 
-    @AttributeOverrides({
-            @AttributeOverride(name = "lat", column = @Column(name = "lat")),
-            @AttributeOverride(name = "lon", column = @Column(name = "lon"))
-    })
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "location", nullable = false)
     private Location location;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

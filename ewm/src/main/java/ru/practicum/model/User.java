@@ -29,5 +29,8 @@ public class User {
     @NotNull
     @Column(name = "email", nullable = false, length = 100, unique = true)
     private String email;
+
+    @Column(name = "country", length = 100)
+    private String country;
 }
 

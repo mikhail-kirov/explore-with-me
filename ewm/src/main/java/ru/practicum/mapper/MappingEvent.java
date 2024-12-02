@@ -2,19 +2,15 @@ package ru.practicum.mapper;
 
 import ru.practicum.dto.EventFullDto;
 import ru.practicum.dto.EventShortDto;
-import ru.practicum.dto.Location;
 import ru.practicum.dto.NewEventDto;
-import ru.practicum.model.Category;
-import ru.practicum.model.Event;
-import ru.practicum.model.EventStatus;
-import ru.practicum.model.User;
+import ru.practicum.model.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class MappingEvent {
 
-    public static Event toEvent(User user, Category category, NewEventDto newEvent) {
+    public static Event toEvent(User user, Category category, NewEventDto newEvent, Location location) {
         return new Event(
                 null,
                 newEvent.getAnnotation(),
@@ -29,7 +25,7 @@ public class MappingEvent {
                 newEvent.getParticipantLimit(),
                 0L,
                 0,
-                new Location(newEvent.getLocation().getLat(), newEvent.getLocation().getLon()),
+                location,
                 user,
                 category
         );
@@ -45,7 +41,7 @@ public class MappingEvent {
                 .eventDate(event.getEventDate())
                 .id(event.getId())
                 .initiator(MappingUser.toUserShortDto(event.getInitiator()))
-                .location(event.getLocation())
+                .location(MappingLocation.toLocationShortDto(event.getLocation()))
                 .paid(event.getPaid())
                 .participantLimit(event.getParticipantLimit())
                 .publishedOn(event.getPublishedOn())
@@ -54,6 +50,10 @@ public class MappingEvent {
                 .title(event.getTitle())
                 .views(event.getViews())
                 .build();
+    }
+
+    public static List<EventFullDto> toEventFullDto(List<Event> events) {
+        return events.stream().map(MappingEvent::toEventFullDto).toList();
     }
 
     public static EventShortDto toEventShortDto(Event event) {

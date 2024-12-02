@@ -10,11 +10,19 @@ import java.util.List;
 public class MappingUser {
 
     public static UserDto toUserDto(User user) {
-        return new UserDto(user.getEmail().trim(), user.getId(), user.getName().trim());
+        return new UserDto(user.getEmail(),
+                           user.getId(),
+                           user.getName(),
+                           user.getCountry() != null ? user.getCountry() : null);
     }
 
     public static User toUser(NewUserRequest newUser) {
-        return new User(null, newUser.getName(), newUser.getEmail());
+        User user = new User();
+        user.setId(null);
+        user.setEmail(newUser.getEmail().trim());
+        user.setName(newUser.getName().trim());
+        user.setCountry(newUser.getCountry() != null ? newUser.getCountry().trim() : null);
+        return user;
     }
 
     public static List<UserDto> toUserDto(List<User> users) {

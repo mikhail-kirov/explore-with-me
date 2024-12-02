@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.data.LocationRepository;
 import ru.practicum.data.privateData.PrivateEventRepository;
 import ru.practicum.data.privateData.PrivateRequestRepository;
 import ru.practicum.dto.*;
@@ -14,6 +15,7 @@ import ru.practicum.mapper.MappingRequest;
 import ru.practicum.model.*;
 import ru.practicum.validation.ValidCategory;
 import ru.practicum.validation.ValidEvent;
+import ru.practicum.validation.ValidLocation;
 import ru.practicum.validation.ValidUser;
 
 import java.util.ArrayList;
@@ -29,9 +31,11 @@ public class PrivateEventsServiceImpl implements PrivateEventsService {
 
     private final PrivateEventRepository privateEventRepository;
     private final PrivateRequestRepository privateRequestRepository;
+    private final LocationRepository locationRepository;
     private final ValidUser validUser;
     private final ValidEvent validEvent;
     private final ValidCategory validCategory;
+    private final ValidLocation validLocation;
     private final MappingEventToNewEvent mappingEventToNewEvent;
 
     @Override
@@ -40,9 +44,10 @@ public class PrivateEventsServiceImpl implements PrivateEventsService {
         validEvent.validNewEventByDate(newEvent.getEventDate());
         User user = validUser.validUserById(userId);
         Category category = validCategory.validCategoryById(newEvent.getCategory());
+        Location location = validLocation.validateLocationById(newEvent.getLocation());
         validEvent.validNewEventDto(newEvent.getEventDate());
 
-        Event event = MappingEvent.toEvent(user, category, newEvent);
+        Event event = MappingEvent.toEvent(user, category, newEvent, location);
         event = privateEventRepository.save(event);
         log.info("Событие сохранено: {}", event.getAnnotation());
         return MappingEvent.toEventFullDto(event);
@@ -77,7 +82,8 @@ public class PrivateEventsServiceImpl implements PrivateEventsService {
         validUser.validUserById(userId);
         Event event = validEvent.validPatchEventByState(eventId);
         validEvent.validNewEventDto(event.getEventDate());
-        Event newEvent = mappingEventToNewEvent.setNewEvent(event, eventPatchDto);
+        Location location = locationRepository.findById(eventPatchDto.getLocation()).orElse(null);
+        Event newEvent = mappingEventToNewEvent.setNewEvent(event, eventPatchDto, location);
         privateEventRepository.save(newEvent);
         log.info("Событие '{}' изменено", newEvent.getAnnotation());
         return MappingEvent.toEventFullDto(newEvent);

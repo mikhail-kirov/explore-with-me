@@ -1,5 +1,8 @@
 package ru.practicum.service;
 
+import com.opencagedata.jopencage.JOpenCageGeocoder;
+import com.opencagedata.jopencage.model.JOpenCageResponse;
+import com.opencagedata.jopencage.model.JOpenCageReverseRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -21,7 +24,7 @@ import java.util.Map;
 public class StatsService extends BaseClient {
 
     @Autowired
-    public StatsService(@Value("http://stats-server:9090") String serverUrl, RestTemplateBuilder builder) {
+    public StatsService(@Value("http://localhost:9090") String serverUrl, RestTemplateBuilder builder) {
         super(
                 builder
                         .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl))
