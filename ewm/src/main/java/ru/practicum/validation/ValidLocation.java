@@ -10,7 +10,6 @@ import ru.practicum.exeption.BadRequestException;
 import ru.practicum.exeption.IncorrectParameterException;
 import ru.practicum.exeption.NotFoundException;
 import ru.practicum.model.Location;
-import ru.practicum.model.User;
 import ru.practicum.service.ExternalService;
 
 @Component

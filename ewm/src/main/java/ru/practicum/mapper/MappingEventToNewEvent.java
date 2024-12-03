@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import ru.practicum.dto.EventPatchDto;
 import ru.practicum.model.Event;
 import ru.practicum.model.EventStatus;
-import ru.practicum.model.Location;
 import ru.practicum.validation.ValidCategory;
 
 @Component
