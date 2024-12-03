@@ -117,97 +117,6 @@
 							"response": []
 						},
 						{
-							"name": "Вывод всех локаций",
-							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"const main = async () => {\r",
-											"    const api = new API(pm);\r",
-											"    const rnd = new RandomUtils();\r",
-											"\r",
-											"    try {\r",
-											"        await api.addAdminLocation(rnd.getLocation(53.211748, 43.036660, 10));\r",
-											"        await api.addAdminLocation(rnd.getLocation(53.104309, 43.329652, 30));\r",
-											"    } catch(err) {\r",
-											"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
-											"    }\r",
-											"};\r",
-											"\r",
-											"const interval = setInterval(() => {}, 1000);\r",
-											"\r",
-											"setTimeout(async () => \r",
-											"    {\r",
-											"        try {\r",
-											"            await main();\r",
-											"        } catch (e) {\r",
-											"            console.error(e);\r",
-											"        } finally {\r",
-											"            clearInterval(interval);\r",
-											"        }\r",
-											"    },  \r",
-											"    100 \r",
-											");"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								},
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
-											"    pm.response.to.have.status(200);   \r",
-											"    pm.response.to.be.withBody;\r",
-											"    pm.response.to.be.json;\r",
-											"});\r",
-											"\r",
-											"const target = pm.response.json()[0];\r",
-											"\r",
-											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius\", function () {\r",
-											"pm.expect(target).to.have.property('id');\r",
-											"pm.expect(target).to.have.property('name');\r",
-											"pm.expect(target).to.have.property('description');\r",
-											"pm.expect(target).to.have.property('lat');\r",
-											"pm.expect(target).to.have.property('lon');\r",
-											"pm.expect(target).to.have.property('radius');\r",
-											"});\r",
-											"\r",
-											"pm.test(\"Должен быть найдены 2 локации\", function () {\r",
-											"    pm.expect(pm.response.json().length).to.eql(3);\r",
-											"});"
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{baseUrl}}/admin/locations/all",
-									"host": [
-										"{{baseUrl}}"
-									],
-									"path": [
-										"admin",
-										"locations",
-										"all"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Получить локацию по ID Copy",
 							"event": [
 								{
@@ -532,8 +441,8 @@
 											"        const user = await api.addUser(rnd.getUserRussia());\r",
 											"        const category = await api.addCategory(rnd.getCategory());\r",
 											"        const location = await api.addAdminLocation(rnd.getLocation(53.407208, 58.980100, 1));\r",
-											"        await api.addEvent(user.id, rnd.getEvent(category.id, location.id));\r",
-											"        await api.addEvent(user.id, rnd.getEvent(category.id, location.id));\r",
+											"        await api.addEvent(user.id, rnd.getEvent(category.id, location));\r",
+											"        await api.addEvent(user.id, rnd.getEvent(category.id, location));\r",
 											"        pm.collectionVariables.set('locId', location.id);\r",
 											"    } catch(err) {\r",
 											"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
@@ -648,8 +557,8 @@
 											"        const category = await api.addCategory(rnd.getCategory());\r",
 											"        const location1 = await api.addAdminLocation(rnd.getLocation(56.127890, 44.077791, 1));\r",
 											"        const location2 = await api.addAdminLocation(rnd.getLocation(56.144677, 44.345451, 1));\r",
-											"        await api.addEvent(user.id, rnd.getEvent(category.id, location1.id));\r",
-											"        await api.addEvent(user.id, rnd.getEvent(category.id, location2.id));\r",
+											"        await api.addEvent(user.id, rnd.getEvent(category.id, location1));\r",
+											"        await api.addEvent(user.id, rnd.getEvent(category.id, location2));\r",
 											"    } catch(err) {\r",
 											"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
 											"    }\r",
@@ -721,7 +630,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/locations/events/near?lat=56.078590&lon=43.950994&rad=20",
+									"raw": "{{baseUrl}}/locations/events/near?lat=56.078590&lon=43.950994&rad=10",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -741,7 +650,7 @@
 										},
 										{
 											"key": "rad",
-											"value": "20"
+											"value": "10"
 										}
 									]
 								}
@@ -1544,7 +1453,7 @@
 									"        const user = await api.addUser(rnd.getUserRussia());\r",
 									"        const category = await api.addCategory(rnd.getCategory());\r",
 									"        const location = await api.addAdminLocation(rnd.getLocation(50.835401, 40.584477, 1));\r",
-									"        await api.addEvent(user.id, rnd.getEvent(category.id, location.id));\r",
+									"        await api.addEvent(user.id, rnd.getEvent(category.id, location));\r",
 									"        pm.collectionVariables.set(\"response\", location)\r",
 									"        pm.collectionVariables.set(\"locId\", location.id)\r",
 									"    } catch(err) {\r",
@@ -1780,7 +1689,7 @@
 							"variable": [
 								{
 									"key": "locId",
-									"value": "99"
+									"value": "1001"
 								}
 							]
 						}
@@ -1788,7 +1697,7 @@
 					"response": []
 				},
 				{
-					"name": "Добавление новой локации от пользователя из другой страны",
+					"name": "Добавление локации вне России",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -1800,112 +1709,8 @@
 									"\r",
 									"    let location;\r",
 									"    try {\r",
-									"        const user = await api.addUser(rnd.getUserSweden());\r",
-									"        location = rnd.getLocation(55.337295, 63.914346, 3);\r",
-									"        pm.collectionVariables.set(\"response\", location)\r",
-									"        pm.collectionVariables.set(\"userId\", user.id)\r",
-									"    } catch(err) {\r",
-									"        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
-									"    }\r",
-									"\r",
-									"    pm.request.body.update({\r",
-									"        mode: 'raw',\r",
-									"        raw: JSON.stringify(location),\r",
-									"        options: { raw: { language: 'json' } }\r",
-									"    });\r",
-									"};\r",
-									"\r",
-									"const interval = setInterval(() => {}, 1000);\r",
-									"\r",
-									"setTimeout(async () => \r",
-									"    {\r",
-									"        try {\r",
-									"            await main();\r",
-									"        } catch (e) {\r",
-									"            console.error(e);\r",
-									"        } finally {\r",
-									"            clearInterval(interval);\r",
-									"        }\r",
-									"    },  \r",
-									"    100 \r",
-									");"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Ответ должен содержать код статуса 404 и данные в формате json\", function () {\r",
-									"    pm.response.to.be.badRequest;   \r",
-									"    pm.response.to.be.withBody;\r",
-									"    pm.response.to.be.json;\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{{request_body}}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/users/:userId/locations",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users",
-								":userId",
-								"locations"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": "{{userId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Добавление новой локации от пользователя c country = null",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"const main = async () => {\r",
-									"    const api = new API(pm);\r",
-									"    const rnd = new RandomUtils();\r",
-									"\r",
-									"    let location;\r",
-									"    try {\r",
-									"        const user = await api.addUser(rnd.getUser());\r",
-									"        location = rnd.getLocation(55.337295, 63.914346, 3);\r",
+									"        const user = await api.addUser(rnd.getUserRussia());\r",
+									"        location = rnd.getLocation(37.469782, 69.619450, 3);\r",
 									"        pm.collectionVariables.set(\"response\", location)\r",
 									"        pm.collectionVariables.set(\"userId\", user.id)\r",
 									"    } catch(err) {\r",
