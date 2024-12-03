@@ -29,6 +29,7 @@ public class ValidEvent {
 
     public Event validEventById(Long eventId) {
         if (eventId == null) {
+            log.info("Event with id = null");
             throw new BadRequestException("Event with id = null", "Bad request.");
         }
         return privateEventRepository.findById(eventId)
@@ -37,6 +38,7 @@ public class ValidEvent {
 
     public void validNewEventByDate(LocalDateTime eventDate) {
         if (eventDate != null && eventDate.isBefore(LocalDateTime.now())) {
+            log.info("Ошибка: даты события в прошлом");
             throw new BadRequestException("Даты события в прошлом.","Bad request.");
         }
     }
