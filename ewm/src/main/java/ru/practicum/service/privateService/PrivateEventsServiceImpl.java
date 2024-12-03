@@ -11,11 +11,11 @@ import ru.practicum.dto.*;
 import ru.practicum.exeption.IncorrectParameterException;
 import ru.practicum.mapper.MappingEvent;
 import ru.practicum.mapper.MappingEventToNewEvent;
+import ru.practicum.mapper.MappingLocation;
 import ru.practicum.mapper.MappingRequest;
 import ru.practicum.model.*;
 import ru.practicum.validation.ValidCategory;
 import ru.practicum.validation.ValidEvent;
-import ru.practicum.validation.ValidLocation;
 import ru.practicum.validation.ValidUser;
 
 import java.util.ArrayList;
@@ -35,7 +35,6 @@ public class PrivateEventsServiceImpl implements PrivateEventsService {
     private final ValidUser validUser;
     private final ValidEvent validEvent;
     private final ValidCategory validCategory;
-    private final ValidLocation validLocation;
     private final MappingEventToNewEvent mappingEventToNewEvent;
 
     @Override
@@ -44,14 +43,13 @@ public class PrivateEventsServiceImpl implements PrivateEventsService {
         validEvent.validNewEventByDate(newEvent.getEventDate());
         User user = validUser.validUserById(userId);
         Category category = validCategory.validCategoryById(newEvent.getCategory());
-        Location location = validLocation.validateLocationById(newEvent.getLocation());
+        Location location = locationRepository.save(MappingLocation.toLocation(userId, newEvent.getLocation()));
         validEvent.validNewEventDto(newEvent.getEventDate());
 
         Event event = MappingEvent.toEvent(user, category, newEvent, location);
         event = privateEventRepository.save(event);
         log.info("Событие сохранено: {}", event.getAnnotation());
         return MappingEvent.toEventFullDto(event);
-
     }
 
     @Override
@@ -82,8 +80,7 @@ public class PrivateEventsServiceImpl implements PrivateEventsService {
         validUser.validUserById(userId);
         Event event = validEvent.validPatchEventByState(eventId);
         validEvent.validNewEventDto(event.getEventDate());
-        Location location = locationRepository.findById(eventPatchDto.getLocation()).orElse(null);
-        Event newEvent = mappingEventToNewEvent.setNewEvent(event, eventPatchDto, location);
+        Event newEvent = mappingEventToNewEvent.setNewEvent(event, eventPatchDto);
         privateEventRepository.save(newEvent);
         log.info("Событие '{}' изменено", newEvent.getAnnotation());
         return MappingEvent.toEventFullDto(newEvent);

@@ -15,6 +15,8 @@ import java.util.Map;
 @Service
 public class ExternalService extends BaseClient {
 
+    private static final String COUNTRY = "Россия";
+
     @Autowired
     public ExternalService(@Value("https://api.opencagedata.com") String serverUrl, RestTemplateBuilder builder) {
         super(
@@ -25,7 +27,7 @@ public class ExternalService extends BaseClient {
         );
     }
 
-    public Boolean validateCoordinatesByCountry(Double lat, Double lon, String country) {
+    public Boolean validateCoordinatesByCountry(Double lat, Double lon) {
 
         Map<String, Object> parameters = new HashMap<>();
 
@@ -39,6 +41,6 @@ public class ExternalService extends BaseClient {
 
         String address = result.getBody().toString();
 
-        return address.contains(country);
+        return address.contains(COUNTRY);
     }
 }

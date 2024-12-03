@@ -11,7 +11,6 @@ import ru.practicum.dto.LocationDto;
 import ru.practicum.dto.LocationPrivateDto;
 import ru.practicum.mapper.MappingLocation;
 import ru.practicum.model.Location;
-import ru.practicum.model.User;
 import ru.practicum.validation.ValidLocation;
 import ru.practicum.validation.ValidUser;
 
@@ -30,8 +29,8 @@ public class PrivateLocationServiceImpl implements PrivateLocationService {
     @Override
     public LocationPrivateDto post(long userId, LocationDto locationDto) {
         validLocation.validCreateCopyLocation(locationDto);
-        User user = validUser.validUserById(userId);
-        validLocation.validUserCountry(user, locationDto);
+        validUser.validUserById(userId);
+        validLocation.validUserCountry(locationDto);
         Location location = MappingLocation.toLocation(userId, locationDto);
         return MappingLocation.toLocationPrivateDto(locationRepository.save(location));
     }
@@ -46,9 +45,9 @@ public class PrivateLocationServiceImpl implements PrivateLocationService {
 
     @Override
     public LocationPrivateDto patchLocationById(long userId, long locationId, LocationDto locationDto) {
-        User user = validUser.validUserById(userId);
+        validUser.validUserById(userId);
         validLocation.validOwnerLocation(locationId, userId);
-        validLocation.validUserCountry(user, locationDto);
+        validLocation.validUserCountry(locationDto);
         Location location = validLocation.validateLocationById(locationId);
         MappingLocation.toNewLocation(location, locationDto);
         location = locationRepository.save(location);

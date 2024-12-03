@@ -23,7 +23,7 @@ public class MappingLocation {
 
     public static Location toLocation(long userId, LocationDto locationDto) {
         return new Location(
-                null,
+                locationDto.getId() != null ? locationDto.getId() : null,
                 locationDto.getName(),
                 locationDto.getDescription(),
                 locationDto.getLat(),
@@ -66,8 +66,6 @@ public class MappingLocation {
 
     public static LocationShortDto toLocationShortDto(Location location) {
         return new LocationShortDto(
-                location.getName(),
-                location.getDescription(),
                 location.getLat(),
                 location.getLon()
         );

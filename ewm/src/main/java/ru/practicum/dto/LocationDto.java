@@ -15,11 +15,9 @@ public class LocationDto {
 
     Long id;
 
-    @NotNull
     @Length(min = 1, max = 300)
     private String name;
 
-    @NotNull
     @Length(min = 1)
     private String description;
 

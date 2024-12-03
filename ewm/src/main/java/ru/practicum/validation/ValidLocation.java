@@ -49,11 +49,8 @@ public class ValidLocation {
         }
     }
 
-    public void validUserCountry(User user, LocationDto locationDto) {
-        if (user.getCountry() == null) {
-            throw new BadRequestException("Нельзя создать локацию пользователю без указанной страны в профиле", "Bad Request");
-        }
-        if (!externalService.validateCoordinatesByCountry(locationDto.getLat(), locationDto.getLon(), user.getCountry())) {
+    public void validUserCountry(LocationDto locationDto) {
+        if (!externalService.validateCoordinatesByCountry(locationDto.getLat(), locationDto.getLon())) {
             throw new BadRequestException("Страна указанная в профиле пользователя не совпадает со страной переданных координат. Отказано.", "Bad Request");
         }
     }

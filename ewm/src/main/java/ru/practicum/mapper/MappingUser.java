@@ -12,8 +12,8 @@ public class MappingUser {
     public static UserDto toUserDto(User user) {
         return new UserDto(user.getEmail(),
                            user.getId(),
-                           user.getName(),
-                           user.getCountry() != null ? user.getCountry() : null);
+                           user.getName()
+        );
     }
 
     public static User toUser(NewUserRequest newUser) {
@@ -21,7 +21,6 @@ public class MappingUser {
         user.setId(null);
         user.setEmail(newUser.getEmail().trim());
         user.setName(newUser.getName().trim());
-        user.setCountry(newUser.getCountry() != null ? newUser.getCountry().trim() : null);
         return user;
     }
 

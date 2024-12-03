@@ -21,7 +21,4 @@ public class NewUserRequest {
     @NotBlank
     @Size(min = 2, max = 250)
     private String name;
-
-    @Size(min = 2, max = 100)
-    private String country;
 }

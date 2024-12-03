@@ -14,12 +14,12 @@ public class MappingEventToNewEvent {
 
     private final ValidCategory validCategory;
 
-    public Event setNewEvent(Event event, EventPatchDto eventPatch, Location location) {
+    public Event setNewEvent(Event event, EventPatchDto eventPatch) {
         event.setAnnotation(eventPatch.getAnnotation() != null ? eventPatch.getAnnotation() : event.getAnnotation());
         event.setCategory(eventPatch.getCategory() != null ? validCategory.validCategoryById(eventPatch.getCategory()) : event.getCategory());
         event.setDescription(eventPatch.getDescription() != null ? eventPatch.getDescription() : event.getDescription());
         event.setEventDate(eventPatch.getEventDate() != null ? eventPatch.getEventDate() : event.getEventDate());
-        event.setLocation(eventPatch.getLocation() != null ? location : event.getLocation());
+        event.setLocation(eventPatch.getLocation() != null ? eventPatch.getLocation() : event.getLocation());
         event.setPaid(eventPatch.getPaid() != null ? eventPatch.getPaid() : event.getPaid());
         event.setParticipantLimit(eventPatch.getParticipantLimit() != null ? eventPatch.getParticipantLimit() : event.getParticipantLimit());
         event.setRequestModeration(eventPatch.getRequestModeration() != null ? eventPatch.getRequestModeration() : event.getRequestModeration());

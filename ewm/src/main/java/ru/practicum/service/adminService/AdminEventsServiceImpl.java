@@ -7,7 +7,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.data.adminData.AdminEventsRepository;
-import ru.practicum.data.LocationRepository;
 import ru.practicum.dto.EventFullDto;
 import ru.practicum.dto.EventPatchDto;
 import ru.practicum.dto.RequestParamForAdminEvent;
@@ -27,7 +26,6 @@ import java.util.List;
 public class AdminEventsServiceImpl implements AdminEventsService {
 
     private final AdminEventsRepository adminEventsRepository;
-    private final LocationRepository locationRepository;
     private final ValidEvent validEvent;
     private final ParseDate parseDate;
     private final MappingEventToNewEvent mappingEventToNewEvent;
@@ -63,7 +61,6 @@ public class AdminEventsServiceImpl implements AdminEventsService {
         validEvent.validNewEventByDate(eventPatchDto.getEventDate());
 
         Event event = validEvent.validEventById(eventId);
-        Location location = locationRepository.findById(eventPatchDto.getLocation()).orElse(null);
         LocalDateTime now = LocalDateTime.now();
 
         if (!now.plusHours(1).isBefore(event.getEventDate())) {
@@ -83,7 +80,7 @@ public class AdminEventsServiceImpl implements AdminEventsService {
                     "For the requested operation the conditions are not met.");
         }
 
-        event = mappingEventToNewEvent.setNewEvent(event, eventPatchDto, location);
+        event = mappingEventToNewEvent.setNewEvent(event, eventPatchDto);
 
         if (event.getState().equals(EventStatus.PUBLISHED.name())) {
             event.setPublishedOn(now);

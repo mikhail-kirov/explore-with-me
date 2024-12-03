@@ -21,7 +21,4 @@ public class UserDto extends User {
 
     @NotNull
     private String name;
-
-    @NotNull
-    private String country;
 }

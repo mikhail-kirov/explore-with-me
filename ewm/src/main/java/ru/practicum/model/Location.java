@@ -17,11 +17,9 @@ public class Location {
     @Column(name = "location_id")
     private Long id;
 
-    @NotNull
     @Column(name = "name")
     private String name;
 
-    @NotNull
     @Column(name = "description")
     private String description;
 
