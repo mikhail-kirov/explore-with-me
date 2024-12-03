@@ -14,9 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 public class NewCompilationDto {
-
     private List<Long> events = new ArrayList<>();
-
     private Boolean pinned = Boolean.FALSE;
 
     @NotNull
