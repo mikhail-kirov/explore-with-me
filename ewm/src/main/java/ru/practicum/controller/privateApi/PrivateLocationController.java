@@ -32,7 +32,7 @@ public class PrivateLocationController {
     @GetMapping("/{locId}")
     public LocationPrivateDto getById(@PathVariable long userId,
                                       @PathVariable @Positive long locId) {
-        log.info("Private-запрос на получение локации по id = {}", locId);
+        log.info("Private-запрос на получение локации с id = {}", locId);
         return privateLocationService.getLocationById(userId, locId);
     }
 
@@ -40,7 +40,7 @@ public class PrivateLocationController {
     public LocationPrivateDto update(@PathVariable long userId,
                                      @PathVariable @Positive long locId,
                                      @RequestBody @Valid LocationDto locationDto) {
-        log.info("Private-запрос на изменение локации по id = {}", locId);
+        log.info("Private-запрос на изменение локации с id = {}", locId);
         return privateLocationService.patchLocationById(userId, locId, locationDto);
     }
 

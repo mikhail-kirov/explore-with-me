@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class PublicLocationServiceImpl implements PublicLocationService {
 
@@ -30,8 +30,10 @@ public class PublicLocationServiceImpl implements PublicLocationService {
     public List<LocationDto> getLocationsByNameOrDescription(String text) {
         List<Location> locations = locationRepository.findByNameAndDescription(text);
         if (!locations.isEmpty()) {
+            log.info("Список локаций с фильтром по имени и описанию в количестве {} отправлен", locations.size());
             return MappingLocation.toLocationDto(locations);
         }
+        log.info("Локации не найдены");
         return List.of();
     }
 
@@ -39,8 +41,10 @@ public class PublicLocationServiceImpl implements PublicLocationService {
     public List<LocationDto> getLocationsByCoordinatesAndRadius(float latitude, float longitude, float radius) {
         List<Location> locations = locationRepository.findByNearLocations(latitude, longitude, radius);
         if (!locations.isEmpty()) {
+            log.info("Список локаций с фильтром по координатам и радиусу в количестве {} отправлен", locations.size());
             return MappingLocation.toLocationDto(locations);
         }
+        log.info("Локации не найдены");
         return List.of();
     }
 
@@ -49,8 +53,10 @@ public class PublicLocationServiceImpl implements PublicLocationService {
         Location location = validLocation.validateLocationById(locationId);
         List<Event> events = adminEventsRepository.findEventsByLocation(location);
         if (!events.isEmpty()) {
+            log.info("Список событий по выбранной локации в количестве {} отправлен", events.size());
             return MappingEvent.toEventFullDto(events);
         }
+        log.info("События не найдены");
         return List.of();
     }
 
@@ -60,9 +66,11 @@ public class PublicLocationServiceImpl implements PublicLocationService {
         if (!locations.isEmpty()) {
             List<Event> events = adminEventsRepository.findAllByLocationIn(locations);
             if (!events.isEmpty()) {
+                log.info("Список событий в пределах выбранных координат и радиуса в количестве {} отправлен", events.size());
                 return MappingEvent.toEventFullDto(events);
             }
         }
+        log.info("События не найдены");
         return List.of();
     }
 }

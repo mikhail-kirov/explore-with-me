@@ -19,7 +19,7 @@ public class PublicLocationController {
 
     @GetMapping
     public List<LocationDto> getAllLocationByText(@RequestParam(value = "text") String text) {
-        log.info("Запрос на получение выборки локаций с фильтрацией");
+        log.info("Public-запрос на получение выборки локаций с фильтрацией");
         return publicLocationService.getLocationsByNameOrDescription(text);
     }
 
@@ -27,7 +27,7 @@ public class PublicLocationController {
     public List<LocationDto> getNearLocationsByCoordinatesAndRadius(@RequestParam (value = "lat") String latitude,
                                                                     @RequestParam (value = "lon") String longitude,
                                                                     @RequestParam (value = "rad") String radius) {
-        log.info("Запрос на получение выборки ближайших локаций от указанной точки");
+        log.info("Public-запрос на получение выборки ближайших локаций от указанной точки");
         return publicLocationService.getLocationsByCoordinatesAndRadius(Float.parseFloat(latitude), Float.parseFloat(longitude), Float.parseFloat(radius));
     }
 
@@ -35,13 +35,13 @@ public class PublicLocationController {
     public List<EventFullDto> getNearEventsByCoordinatesAndRadius(@RequestParam (value = "lat") float latitude,
                                                                   @RequestParam (value = "lon") float longitude,
                                                                   @RequestParam (value = "rad") float radius) {
-        log.info("Запрос на получение списка всех событий в заданных координатах и радиусу");
+        log.info("Public-запрос на получение списка всех событий в заданных координатах и радиусу");
         return publicLocationService.getEventsByCoordinatesAndRadius(latitude, longitude, radius);
     }
 
     @GetMapping("/{locId}/events")
     public List<EventFullDto> getEventsByLocationId(@PathVariable long locId) {
-        log.info("Запрос на получение списка событий заданной локации");
+        log.info("Public-запрос на получение списка событий заданной локации");
         return publicLocationService.getEventsByLocationId(locId);
     }
 }
