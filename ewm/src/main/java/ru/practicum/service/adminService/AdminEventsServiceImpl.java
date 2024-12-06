@@ -13,10 +13,7 @@ import ru.practicum.dto.RequestParamForAdminEvent;
 import ru.practicum.exeption.IncorrectParameterException;
 import ru.practicum.mapper.MappingEvent;
 import ru.practicum.mapper.MappingEventToNewEvent;
-import ru.practicum.model.Event;
-import ru.practicum.model.EventStatus;
-import ru.practicum.model.ParseDate;
-import ru.practicum.model.StateAction;
+import ru.practicum.model.*;
 import ru.practicum.validation.ValidEvent;
 
 import java.time.LocalDateTime;

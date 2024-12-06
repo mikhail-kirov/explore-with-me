@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
+import ru.practicum.model.Location;
 
 import java.time.LocalDateTime;
 
@@ -26,12 +27,14 @@ public class EventPatchDto {
     private LocalDateTime eventDate;
 
     private Location location;
+
     private Boolean paid;
 
     @PositiveOrZero
     private Integer participantLimit;
 
     private Boolean requestModeration;
+
     private String stateAction;
 
     @Length(min = 3, max = 120)

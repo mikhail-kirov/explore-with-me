@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.data.LocationRepository;
 import ru.practicum.data.privateData.PrivateEventRepository;
 import ru.practicum.data.privateData.PrivateRequestRepository;
 import ru.practicum.dto.*;
 import ru.practicum.exeption.IncorrectParameterException;
 import ru.practicum.mapper.MappingEvent;
 import ru.practicum.mapper.MappingEventToNewEvent;
+import ru.practicum.mapper.MappingLocation;
 import ru.practicum.mapper.MappingRequest;
 import ru.practicum.model.*;
 import ru.practicum.validation.ValidCategory;
@@ -29,6 +31,7 @@ public class PrivateEventsServiceImpl implements PrivateEventsService {
 
     private final PrivateEventRepository privateEventRepository;
     private final PrivateRequestRepository privateRequestRepository;
+    private final LocationRepository locationRepository;
     private final ValidUser validUser;
     private final ValidEvent validEvent;
     private final ValidCategory validCategory;
@@ -40,13 +43,13 @@ public class PrivateEventsServiceImpl implements PrivateEventsService {
         validEvent.validNewEventByDate(newEvent.getEventDate());
         User user = validUser.validUserById(userId);
         Category category = validCategory.validCategoryById(newEvent.getCategory());
+        Location location = locationRepository.save(MappingLocation.toLocation(userId, newEvent.getLocation()));
         validEvent.validNewEventDto(newEvent.getEventDate());
 
-        Event event = MappingEvent.toEvent(user, category, newEvent);
+        Event event = MappingEvent.toEvent(user, category, newEvent, location);
         event = privateEventRepository.save(event);
         log.info("Событие сохранено: {}", event.getAnnotation());
         return MappingEvent.toEventFullDto(event);
-
     }
 
     @Override

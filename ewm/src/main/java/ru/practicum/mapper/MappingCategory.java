@@ -7,7 +7,6 @@ import java.util.List;
 
 public class MappingCategory {
 
-
     public static Category toCategory(CategoryDto categoryDto) {
         return new Category(null, categoryDto.getName().trim());
     }
